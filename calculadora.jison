@@ -31,26 +31,21 @@
 
 /*******************************************SINTACTICA************************************************/
 /*......ASOCIACION Y PRECEDENCIA....*/
-    //al no tener precedencia de operadores de JISON se hace una gramatica recursiva por la derecha
+%left tk_mas tk_menos
+%left tk_multiplicar tk_division
+%left tk_pa tk_pc
+//los operadores unarios tienen más precedencia aun que los de agrupacion
 
 %start INICIO
 %%
 
-INICIO: LEXPRESION EOF;
+INICIO: E EOF {};
 
-LEXPRESION: EXPRESION LEXPRESION
-            | ;
-            
-EXPRESION: tk_expresion tk_ca OPERACION tk_cc tk_punto_coma;
+E: E tk_mas E
+    | E tk_menos E
+    | E tk_multiplicar E
+    | E tk_division E
+    | tk_pa E tk_pc
+    | E;
 
-OPERACION: T tk_mas OPERACION
-    | T tk_menos OPERACION
-    | T;
-
-T: F tk_multiplicar T
-    | F tk_division T
-    | F;
-
-F: tk_entero
-    | tk_pa OPERACION tk_pc;
 
