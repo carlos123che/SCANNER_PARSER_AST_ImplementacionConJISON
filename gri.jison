@@ -9,15 +9,15 @@
 
 "EXPRESION"     %{ return 'tk_expresion'; %}
 [0-9]+\b        %{ return 'tk_entero'; %}
-"["             %{ return 'tk_ca' %}
-"]"             %{ return 'tk_cc' %}
+"["             %{ return 'tk_ca'; %}
+"]"             %{ return 'tk_cc'; %}
 "+"             %{ return 'tk_mas'; %}
 "*"             %{ return 'tk_menos'; %}
 "*"             %{ return 'tk_multiplicar'; %}
 "/"             %{ return 'tk_division'; %}
 "("             %{ return 'tk_pa'; %}
-")"             %{ retrun 'tk_pc'; %}
-";"             %{ retrun 'tk_punto_coma'; %}
+")"             %{ return 'tk_pc'; %}
+";"             %{ return 'tk_punto_coma'; %}
 
 
 
@@ -25,7 +25,7 @@
 
 
 <<EOF>> %{ return 'EOF'; %}
-.
+.    { console.log('Error Lexico: ' + yytext + ', en la linea: ' + yylloc.first_line + ', en la columna: ' + yylloc.first_column); }
 
 /lex
 
@@ -47,5 +47,3 @@ E: E tk_mas E
     | E tk_division E
     | tk_pa E tk_pc
     | E;
-
-
